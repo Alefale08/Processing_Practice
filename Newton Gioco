@@ -1,0 +1,71 @@
+int nX = 0;      
+int nY = 0;      
+float aY = 0;    
+int aX = 15;     
+float aV = 0;    
+float aA = 0.05; 
+int p = 0;       
+boolean pCount = true;  
+long t = 0;       
+
+void setup() {
+  size(400, 400);  
+  nY = height - 25; 
+  t = millis();  
+}
+
+void draw() {
+  background(200);  
+
+  
+  aV = aV + aA;  
+  aY = aY + aV;  
+  if (aY > height) {
+    aY = 15;    
+    aX = int(random(width - 20)); 
+    aV = 0;   
+    
+    pCount = true;  
+  }
+
+  fill(255);  
+  if (aY + 10 > nY && aY - 10 < nY + 20) {  
+    if (aX + 10 > nX && aX - 10 < nX + 20) { 
+      fill(255, 0, 0);  
+      if (pCount) p = p + 1;
+      pCount = false;  
+    } 
+  }
+
+  ellipse(aX, aY, 20, 20); 
+  rect(nX, nY, 20, 20); 
+
+
+  // Count the time
+  float timer = (millis() - t) / 1000; 
+ 
+  if (timer >= 30) {  
+    noLoop();
+  }
+
+  fill(0);
+  text("Time: " + (30 - timer), 10, 20);
+
+  fill(0);  
+  text("Hits: " + p, 3 * width / 4, 20); 
+}
+
+void keyPressed() {
+  if (keyCode == RIGHT) {
+    nX = nX + 3;
+  }
+  if (keyCode == LEFT) {
+    nX = nX - 3;
+  }
+  if (nX < 0) {
+    nX = 0;
+  }
+  if (nX > width - 20) {  
+    nX = width - 20;
+  }
+}
